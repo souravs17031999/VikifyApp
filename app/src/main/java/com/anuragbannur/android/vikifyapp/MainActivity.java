@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -44,14 +46,6 @@ public class MainActivity extends AppCompatActivity{
     private StorageReference mStorageRef;
     private StorageReference mVideoRef;
 
-
-
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater menu = get
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,17 +71,11 @@ protected void onCreate(Bundle savedInstanceState) {
         mRecordVideo = findViewById(R.id.buttonRecord);
         mUploadVideo = findViewById(R.id.buttonUpload);
 
+        final Uri[] uri = new Uri[1];
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mVideoRef = mStorageRef.child("videos/video" + getVideoFileCount() + ".mp4");
 
 
-
-
-            final Uri[] uri = new Uri[1];
-
-//        //final Uri uri=Uri.parse("https://firebasestorage.googleapis.com/v0/b/vikify-8f500.appspot.com/o/videos%2Fvideo1.mp4?alt=media&token=f138d573-955e-4e20-894d-5ebfd2472117");
-            mStorageRef = FirebaseStorage.getInstance().getReference();
-            mVideoRef = mStorageRef.child("videos/video" + getVideoFileCount() + ".mp4");
-
-//        Log.v(TAG,"Child:"+mVideoRef);
 
 
             mVideoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -101,9 +89,7 @@ protected void onCreate(Bundle savedInstanceState) {
             mRecordVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                mStorageRef= FirebaseStorage.getInstance().getReference();
-//                mVideoRef=mStorageRef.child("videos/video"+getVideoFileCount()+".mp4");
-//                Log.v(TAG,"ChildInRecordVideo:"+mVideoRef);
+
                     Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(takeVideoIntent, VIDEO_REQUEST_CODE);
@@ -126,6 +112,8 @@ protected void onCreate(Bundle savedInstanceState) {
             loadData();
             upDateValues();
         }
+        
+
 
         private String getVideoFileCount(){
             int fileNumber=Integer.parseInt(i);
@@ -133,7 +121,7 @@ protected void onCreate(Bundle savedInstanceState) {
             String newScreenValue=Integer.toString(newFileNumber);
             i=newScreenValue;
            // saveData();
-            Log.v(TAG,"Screenfrommethod:"+i);
+            Log.v(TAG,"Screen from method:"+i);
             return newScreenValue;
         }
 
@@ -158,6 +146,7 @@ protected void onCreate(Bundle savedInstanceState) {
             mUploadVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(),"Please, wait upload in progress",Toast.LENGTH_SHORT).show();
                     if(videoUri!=null){
                         String number=numberForName();
                         String number1=getVideoFileCount();
@@ -173,12 +162,17 @@ protected void onCreate(Bundle savedInstanceState) {
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(),"Upload JAi",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Upload Unsuccessfull",Toast.LENGTH_SHORT).show();
                             }
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Toast.makeText(getApplicationContext(),"Upload Successfull",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                updateProgress(taskSnapshot);
                             }
                         });
                     }
@@ -190,6 +184,17 @@ protected void onCreate(Bundle savedInstanceState) {
 
         }
     }
+
+    public void updateProgress(UploadTask.TaskSnapshot taskSnapshot){
+        long fileSize=taskSnapshot.getTotalByteCount();
+
+        long uploadBytes=taskSnapshot.getBytesTransferred();
+
+        long progress=(100*uploadBytes)/fileSize;
+        ProgressBar progressBar=findViewById(R.id.pbar);
+        progressBar.setProgress((int)progress);
+    }
+
 
     public  void saveData(String i,String j){
         SharedPreferences sharedPreferences=getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);

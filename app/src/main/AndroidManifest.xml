@@ -34,7 +34,8 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".recordedVideos"></activity>
+        <activity android:name=".recordedVideos" />
+        <activity android:name=".playVideo"></activity>
     </application>
 
 </manifest>

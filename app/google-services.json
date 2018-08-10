@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "44266402709",
+    "firebase_url": "https://vikify-8f500.firebaseio.com",
+    "project_id": "vikify-8f500",
+    "storage_bucket": "vikify-8f500.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44266402709:android:b7bff1a77749291e",
+        "android_client_info": {
+          "package_name": "com.anuragbannur.android.vikifyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44266402709-1cb1e7ovss04i290nsvpt38i0elqj2bp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anuragbannur.android.vikifyapp",
+            "certificate_hash": "87875af2911c9a5f2260b59b6657371cb8ec53ef"
+          }
+        },
+        {
+          "client_id": "44266402709-42do2pet4ihfcrb3qstg8p8sg62k6fhq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ9oB9MQcnNcHoTEDCVlCDjz2Hx4vyYkY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44266402709-42do2pet4ihfcrb3qstg8p8sg62k6fhq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

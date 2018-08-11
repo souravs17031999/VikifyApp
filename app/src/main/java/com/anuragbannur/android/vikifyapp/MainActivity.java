@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask;
 
 
 public class MainActivity extends AppCompatActivity{
+    private static  int SPLASH_TIME_OUT=60000;
     public final String mValueForStorage="Storage_values";
     public static final String SHARED_PREFS="sharedPrefs";
     public final String mValueForDb="Db_values";
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
        Intent mRecordedVideo=new Intent(getApplicationContext(),recordedVideos.class);
        startActivity(mRecordedVideo);
+
        return true;
     }
 
@@ -89,11 +92,21 @@ protected void onCreate(Bundle savedInstanceState) {
             mRecordVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Toast.makeText(view.getContext(),"You have 60 seconds to finish recording q",Toast.LENGTH_SHORT).show();
                     Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(takeVideoIntent, VIDEO_REQUEST_CODE);
                     }
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent homeIntent=new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(homeIntent);
+                            finish();
+                        }
+                    },SPLASH_TIME_OUT);
+
                 }
             });
 

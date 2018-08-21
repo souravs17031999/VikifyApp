@@ -7,7 +7,7 @@
 
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true" />
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,9 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splashScreen"
+        <activity
+            android:name=".splashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,9 @@
 
         <activity android:name=".recordedVideos" />
         <activity android:name=".playVideo" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".glogin" />
+        <activity android:name=".glogout"></activity>
     </application>
 
 </manifest>

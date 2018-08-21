@@ -64,15 +64,15 @@ public class glogin extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//        if(account!=null) {
-//        Intent intent=new Intent(this,LoggedIn.class);
-//        startActivity(intent);
-//        }
-//        Toast.makeText(getApplicationContext(),"Logged in already",Toast.LENGTH_SHORT).show();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null) {
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        }
+        //Toast.makeText(getApplicationContext(),"Logged in already",Toast.LENGTH_SHORT).show();
         super.onStart();
         FirebaseUser currentUser=mAuth.getCurrentUser();
-        Toast.makeText(getApplicationContext(),"Logged in already",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Logged in already",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -88,7 +88,8 @@ public class glogin extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             firebaseAuthWithGoogle(account);
-
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                          startActivity(intent);
             // Signed in successfully, show authenticated UI.
             // updateUI(account);
         } catch (ApiException e) {

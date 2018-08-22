@@ -93,7 +93,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
         assert actionbar != null;

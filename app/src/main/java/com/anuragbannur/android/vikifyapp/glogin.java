@@ -1,6 +1,7 @@
 package com.anuragbannur.android.vikifyapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,18 @@ public class glogin extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext()); //Get all user details
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+            //mTextView.setText(personEmail);
+            Log.v("THIS","NAme:"+personGivenName);
+        }
     }
 
     public void signIn(){

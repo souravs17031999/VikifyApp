@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+
 public class NavDrawer extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 

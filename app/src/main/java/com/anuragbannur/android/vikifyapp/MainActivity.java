@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,11 +20,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,10 +42,14 @@ import com.google.firebase.storage.UploadTask;
 
 public class MainActivity extends AppCompatActivity{
     private static  int SPLASH_TIME_OUT=60000;
+    GoogleSignInClient mGoogleSignInClient;
     public final String mValueForStorage="Storage_values";
     public static final String SHARED_PREFS="sharedPrefs";
     public final String mValueForDb="Db_values";
     private DrawerLayout mDrawerLayout;
+    NavigationView mNavigationView;
+    TextView name,email;
+    ImageView mImageView;
 
     VideoView mVideoView;
     String i="-1";
@@ -46,7 +58,7 @@ public class MainActivity extends AppCompatActivity{
      String i1="i1";
      String j1="j1";
     Button mRecordVideo,mPlayVideo,mUploadVideo;
-    ImageView mImageView;
+
     public static final String TAG="MAINACTIVITY";
     public final int VIDEO_REQUEST_CODE=1;
     private StorageReference mStorageRef;
@@ -87,9 +99,44 @@ protected void onCreate(Bundle savedInstanceState) {
         mUploadVideo = findViewById(R.id.buttonUpload);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.v("TEM","ITEM"+item);
+                if(item.toString()=="signout"){
+                    signOut();
+                }
+                return true;
+            }
+        });
+
+
         final Uri[] uri = new Uri[1];
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mVideoRef = mStorageRef.child("videos/video" + getVideoFileCount() + ".mp4");
+
+
+
+
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext()); //Get all user details
+        if (acct != null) {
+            String personName = acct.getDisplayName();
+            String personGivenName = acct.getGivenName();
+            String personFamilyName = acct.getFamilyName();
+            String personEmail = acct.getEmail();
+            String personId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+            name.setText(personName);
+            email.setText(personEmail);
+            Log.v("THIS","URI"+personPhoto);
+            if(personPhoto!=null){
+                mImageView.setImageURI(null);
+                mImageView.setImageURI(personPhoto);
+            }
+
+        }
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -99,9 +146,6 @@ protected void onCreate(Bundle savedInstanceState) {
         assert actionbar != null;
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-
-
 
             mVideoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -249,6 +293,55 @@ protected void onCreate(Bundle savedInstanceState) {
     public void upDateValues(){
         i=i1;
         j=j1;
+    }
+
+    @Override
+    protected void onStart() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
+        super.onStart();
+    }
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        Log.v(TAG,"ISSS"+id);
+
+//        switch (id) {
+//            case R.id.item_home:
+//                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.item_userProfile:
+//                Toast.makeText(this, "User Profile", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.item_recycleSites_Maps:
+//                Toast.makeText(this, "Waste and Recycle Sites", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.item_settings:
+//                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.item_logOut:
+//                logOut();
+//                return true;
+//        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...Toas
+                        Toast.makeText(getApplicationContext(),"SignedOut",Toast.LENGTH_SHORT).show();
+//                        Intent mIntent=new Intent(getApplicationContext(),MainActivity.class);
+//                        startActivity(mIntent);
+                    }
+                });
     }
 
 }

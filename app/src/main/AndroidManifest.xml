@@ -37,11 +37,13 @@
         </provider>
 
         <activity android:name=".recordedVideos" />
-        <activity android:name=".playVideo" />
         <activity android:name=".MainActivity" />
         <activity android:name=".glogin" />
         <activity android:name=".glogout" />
-        <activity android:name=".NavDrawer"></activity>
+        <activity
+            android:name=".NavDraw"
+            android:label="@string/title_activity_nav_draw"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

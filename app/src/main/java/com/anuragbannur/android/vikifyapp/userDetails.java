@@ -3,70 +3,71 @@ package com.anuragbannur.android.vikifyapp;
 import android.net.Uri;
 
 public class userDetails {
-    String personName;
-    String personGivenName;
-    String personFamilyName;
-    String personEmail;
-    String personId;
-    Uri personPhoto;
+    String mpersonName;
+    String mpersonGivenName;
+    String mpersonFamilyName;
+    String mpersonEmail;
+    String mpersonId;
+    Uri mpersonPhoto;
 
     public userDetails() {
     }
 
     public userDetails(String personName, String personGivenName, String personFamilyName, String personEmail, String personId, Uri personPhoto) {
-        this.personName = personName;
-        this.personGivenName = personGivenName;
-        this.personFamilyName = personFamilyName;
-        this.personEmail = personEmail;
-        this.personId = personId;
-        this.personPhoto = personPhoto;
+        mpersonName = personName;
+       mpersonGivenName = personGivenName;
+        mpersonFamilyName = personFamilyName;
+        mpersonEmail = personEmail;
+        mpersonId = personId;
+        mpersonPhoto = personPhoto;
+
     }
 
     public String getPersonName() {
-        return personName;
+        return mpersonName;
     }
 
     public void setPersonName(String personName) {
-        this.personName = personName;
+        mpersonName = personName;
     }
 
     public String getPersonGivenName() {
-        return personGivenName;
+        return mpersonGivenName;
     }
 
     public void setPersonGivenName(String personGivenName) {
-        this.personGivenName = personGivenName;
+        mpersonGivenName = personGivenName;
     }
 
     public String getPersonFamilyName() {
-        return personFamilyName;
+        return mpersonFamilyName;
     }
 
     public void setPersonFamilyName(String personFamilyName) {
-        this.personFamilyName = personFamilyName;
+        mpersonFamilyName = personFamilyName;
     }
 
     public String getPersonEmail() {
-        return personEmail;
+        return mpersonEmail;
     }
 
-    public void setPersonEmail(String personEmail) {
-        this.personEmail = personEmail;
-    }
+//    public void setPersonEmail(String personEmail) {
+//        this.personEmail = personEmail;
+//    }
 
     public String getPersonId() {
-        return personId;
+        return mpersonId;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
+//    public void setPersonId(String personId) {
+//        this.personId = personId;
+//    }
 
     public Uri getPersonPhoto() {
-        return personPhoto;
+        return mpersonPhoto;
     }
 
-    public void setPersonPhoto(Uri personPhoto) {
-        this.personPhoto = personPhoto;
-    }
+//    public void setPersonPhoto(Uri personPhoto) {
+//        this.personPhoto = personPhoto;
+//    }
 }

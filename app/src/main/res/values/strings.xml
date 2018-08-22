@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VikifyApp</string>
+    <string name="text1">Text1</string>
+    <string name="text2">Text2</string>
 </resources>

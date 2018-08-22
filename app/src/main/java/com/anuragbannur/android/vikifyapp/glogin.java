@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,7 +21,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class glogin extends AppCompatActivity {
     private static final String TAG="MainActivity";
     private FirebaseAuth mAuth;
-    userDetails muserDetails;
     Button mLogout;
     static final int RC_SIGN_IN=1;
     GoogleSignInClient mGoogleSignInClient;
@@ -32,19 +30,11 @@ public class glogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glogin);
         mAuth=FirebaseAuth.getInstance();
-//        mLogout=findViewById(R.id.signOut);
 
-//        mLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signOut();
-//            }
-//        });
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Toast.makeText(getApplicationContext(),"Trying google login",Toast.LENGTH_SHORT).show();
                 signIn();
             }
         });
@@ -54,17 +44,6 @@ public class glogin extends AppCompatActivity {
                 .build();
         mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
 
-//        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getApplicationContext()); //Get all user details
-//        if (acct != null) {
-//            String personName = acct.getDisplayName();
-//            String personGivenName = acct.getGivenName();
-//            String personFamilyName = acct.getFamilyName();
-//            String personEmail = acct.getEmail();
-//            String personId = acct.getId();
-//            Uri personPhoto = acct.getPhotoUrl();
-//            new userDetails(personName, personGivenName,personFamilyName,personEmail,personId,personPhoto);
-//            //mTextView.setText(personEmail);
-//        }
     }
 
     public void signIn(){

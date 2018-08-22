@@ -5,7 +5,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class NavDrawer extends AppCompatActivity {
@@ -17,7 +16,8 @@ public class NavDrawer extends AppCompatActivity {
         setContentView(R.layout.activity_nav_drawer);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();

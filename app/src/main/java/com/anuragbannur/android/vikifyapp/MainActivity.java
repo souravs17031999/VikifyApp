@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity{
     public final String mValueForStorage="Storage_values";
     public static final String SHARED_PREFS="sharedPrefs";
     public final String mValueForDb="Db_values";
+    private DrawerLayout mDrawerLayout;
 
     VideoView mVideoView;
     String i="-1";
@@ -53,13 +57,21 @@ public class MainActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menue, menu);
+//        inflater.inflate(R.menu.,menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       Intent mRecordedVideo=new Intent(getApplicationContext(),recordedVideos.class);
-       startActivity(mRecordedVideo);
+//       Intent mRecordedVideo=new Intent(getApplicationContext(),recordedVideos.class);
+//       startActivity(mRecordedVideo);
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+
+        }
 
        return true;
     }
@@ -73,10 +85,20 @@ protected void onCreate(Bundle savedInstanceState) {
         mPlayVideo = findViewById(R.id.buttonView);
         mRecordVideo = findViewById(R.id.buttonRecord);
         mUploadVideo = findViewById(R.id.buttonUpload);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
         final Uri[] uri = new Uri[1];
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mVideoRef = mStorageRef.child("videos/video" + getVideoFileCount() + ".mp4");
+
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        //setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        assert actionbar != null;
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
 
 
@@ -125,7 +147,8 @@ protected void onCreate(Bundle savedInstanceState) {
             loadData();
             upDateValues();
         }
-        
+
+
 
 
         private String getVideoFileCount(){

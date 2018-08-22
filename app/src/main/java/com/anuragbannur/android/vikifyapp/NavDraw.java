@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,15 +33,42 @@ import java.net.URL;
 
 public class NavDraw extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG="NAVDrawer";
     AlertDialog.Builder builder;
     GoogleSignInClient mGoogleSignInClient;
     TextView mTextViewName,mTextViewEmail;
     ImageView mImageView;
 
     @Override
+    protected void onResume() {
+        Log.v(TAG,"OnResume");
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        Log.v(TAG,"ondestroy");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.v(TAG,"Onstop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.v(TAG,"OnStart");
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_draw);
+        Log.v(TAG,"OnCreate");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -174,6 +202,7 @@ public class NavDraw extends AppCompatActivity
                         Toast.makeText(getApplicationContext(),"SignedOut",Toast.LENGTH_SHORT).show();
                         Intent mIntent=new Intent(getApplicationContext(),glogin.class);
                         startActivity(mIntent);
+                        finish();
                     }
                 });
     }

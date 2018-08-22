@@ -78,6 +78,7 @@ public class glogin extends AppCompatActivity {
         if(account!=null) {
         Intent intent=new Intent(this,NavDraw.class);
         startActivity(intent);
+        finish();
         }
         //Toast.makeText(getApplicationContext(),"Logged in already",Toast.LENGTH_SHORT).show();
         super.onStart();
@@ -100,6 +101,7 @@ public class glogin extends AppCompatActivity {
             firebaseAuthWithGoogle(account);
             Intent intent=new Intent(getApplicationContext(),NavDraw.class);
                           startActivity(intent);
+                          finish();
             // Signed in successfully, show authenticated UI.
             // updateUI(account);
         } catch (ApiException e) {
